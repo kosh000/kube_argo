@@ -69,7 +69,19 @@ Create Namespace
 Apply the files on Kube with the below command. PS: It also accpets folders. `cd` into the repo abd run the below command.
 > kubectl apply -f canary
 
-### Get Commands will be handy!!
+After all of this, create a application with the github repo and start it.
+Get the application-canary.yml from github repo at root, Open ArgoCD > Create App > Edit as a YML and paste it there > Create app.
+
+Install ArgoCD Rollouts Plugin.
+curl -LO https://github.com/argoproj/argo-rollouts/releases/latest/download/kubectl-argo-rollouts-linux-amd64
+chmod +x ./kubectl-argo-rollouts-linux-amd64
+sudo mv ./kubectl-argo-rollouts-linux-amd64 /usr/local/bin/kubectl-argo-rollouts
+
+fetch rollouts with the below commands
+kubectl argo rollouts list rollouts -n docuseal-ns
+kubectl argo rollouts get rollouts rollout-docuseal -n docuseal-ns
+
+### Get Commands will be handy
 
 > kubectl get pod
 > kubectl get svc
