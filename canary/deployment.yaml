@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Rollout
+metadata:
+  name: myapp
+spec:
+  replicas: 3
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        image: docuseal/docuseal
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+  strategy:
+    canary:
+      steps:
+      - experiment:
+          templates:
+          - name: canary-preview
+            specRef: canary
+            selector:
+              matchLabels:
+                app: myapp
+            metadata:
+              labels:
+                app: myapp

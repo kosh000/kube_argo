@@ -1,11 +1,25 @@
-apiVersion: v1
+---
+# The rollout-canary-preview service will point to the preview stack, making them reachable without
+# exposing them to production traffic.
 kind: Service
+apiVersion: v1
 metadata:
-  name: canary_rollout
+  name: rollout-canary-preview
 spec:
   selector:
-    app: canary_rollout
+    app: rollout-canary-preview
   ports:
-  - port: 3000
-    protocol: TCP
+  - protocol: TCP
+    targetPort: 3000
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: rollout-canary-production
+spec:
+  selector:
+    app: rollout-canary-production
+  ports:
+  - protocol: TCP
     targetPort: 3000
