@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Rollout
 metadata:
-  name: myapp
+  name: rollout-canary-myapp
 spec:
-  replicas: 3
+  replicas: 4
   revisionHistoryLimit: 2
   selector:
     matchLabels:
@@ -24,11 +24,11 @@ spec:
       steps:
       - experiment:
           templates:
-          - name: canary-preview
+          - name: myapp-canary
             specRef: canary
             selector:
               matchLabels:
-                app: myapp
+                app: rollout-canary-myapp
             metadata:
               labels:
-                app: myapp
+                app: rollout-canary-myapp
