@@ -78,11 +78,31 @@ chmod +x ./kubectl-argo-rollouts-linux-amd64
 sudo mv ./kubectl-argo-rollouts-linux-amd64 /usr/local/bin/kubectl-argo-rollouts
 
 fetch rollouts with the below commands
+kubectl get rs -n docuseal-ns
 kubectl argo rollouts list rollouts -n docuseal-ns
 kubectl argo rollouts get rollouts rollout-docuseal -n docuseal-ns
+
+Promote the app once identifying that the rollout can be proceeded with.
+kubectl argo rollouts promote rollout-docuseal -n docuseal-ns
 
 ### Get Commands will be handy
 
 > kubectl get pod
 > kubectl get svc
 > kubectl get ns
+
+## Clean up
+
+Open ArgoCD and Delete the application. As the app is deleted all of the services and pods should not longer exist.
+
+Run the below command
+> kubectl get ns
+
+Delete the namespaces you had created. eg below
+> kubectl delete ns docuseal-ns
+
+Shutdown the kube using
+> minikube stop
+
+Delete the minikube data
+> minikube delete

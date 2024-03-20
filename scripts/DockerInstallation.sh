@@ -13,5 +13,7 @@ sudo apt-get update
 
 #Installation
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+sudo usermod -aG docker $USER
+
 #Test
 sudo docker run hello-world
