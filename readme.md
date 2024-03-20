@@ -7,7 +7,7 @@ Implementing Kube, ArgoCD and Docker with ArgoCD Canary Release
 ### **Minikube and KubeCTL**
 Install Kube on the machine. I am using MiniKube
 
-Make sure you have `chocolatey` installed on your system and run the below command to start installation of minikube and kubectl.
+R un the below command to start installation of minikube and kubectl.
 > curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 > sudo install minikube-linux-amd64 /usr/local/bin/minikube
 > curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -17,7 +17,7 @@ Make sure you have `chocolatey` installed on your system and run the below comma
 
 Install docker with the script at the script/dockerinstall.sh
 
-Once the installation is completed, start the kube cluster on your computer with the below command.
+Once the installation is completed, start the kube cluster on your computer with the below command. I have included coredn addon.
 Note: `minikube` uses a VM Manager, make sure you have one installed for it to create a VM.
 > minikube start --addons=dns=coredns
 
@@ -25,11 +25,11 @@ After the minikube has the VM created for you run the below command to verify. I
 > kubectl get nodes
 
 Run the below two commands to check if the setup is working correctly. Below commands will expose and create a minikube service and expose it to be accessed.
-> kubectl create deployment hello-minikube --image=kicbase/echo-server:1.0
-> kubectl expose deployment hello-minikube --type=NodePort --port=8080
+> kubectl create deployment minikube --image=kicbase/echo-server:1.0
+> kubectl expose deployment minikube --type=NodePort --port=8080
 
 Run the below command to get the URL for the above service and open the given address.
-> minikube service hello-minikube --url
+> minikube service minikube --url
 
 ### **Installing Argo CD**
 
@@ -37,13 +37,19 @@ Install argocd with the below command.
 > kubectl create namespace argocd
 > kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
+ArgoCD Rollouts namespace downloaded
+> kubectl create namespace argo-rollouts
+> kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
+
 Run the below command to patch it
 > kubectl patch svc argocd-server -n argocd --type='json' -p='[{"op": "replace", "path": "/spec/type", "value": "LoadBalancer"}]'
 
 Install ArgoCD CLI or form here <https://github.com/argoproj/argo-cd/releases/latest>.
-> choco install argocd-cli
+> curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+> sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+> rm argocd-linux-amd64
 
-Get the admin password with: <!-- uZbCYjOLH6WzT-3Z -->
+Get the admin password with:
 > argocd admin initial-password -n argocd
 
 Run the below command to run ArgoCD
@@ -57,11 +63,14 @@ Once inside the ArgoCD UI, create the app and traverse around as you may.
 Get the kube address from the below command
 > kubectl config view
 
+Create Namespace
+> kubectl create ns docuseal-ns
+
+Apply the files on Kube with the below command. PS: It also accpets folders. `cd` into the repo abd run the below command.
+> kubectl apply -f canary
+
 ### Get Commands will be handy!!
 
 > kubectl get pod
 > kubectl get svc
-
-You can also get the services inside a namespace with below
-> kubectl get svc -n argocd
-> kubectl get svc -n myapp
+> kubectl get ns
