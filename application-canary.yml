@@ -18,10 +18,10 @@ spec:
     spec:
       containers:
       - name: rollouts-demo
-        image: argoproj/rollouts-demo:blue
+        image: docuseal/docuseal
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - containerPort: 3000
   strategy:
     canary:
       steps:
@@ -53,8 +53,8 @@ spec:
     app: rollout-canary-preview
   ports:
   - protocol: TCP
-    port: 80
-    targetPort: 8080
+    port: 3000
+    targetPort: 3000
 
 ---
 kind: Service
@@ -66,5 +66,5 @@ spec:
     app: rollout-canary-production
   ports:
   - protocol: TCP
-    port: 80
-    targetPort: 8080
+    port: 3000
+    targetPort: 3000
