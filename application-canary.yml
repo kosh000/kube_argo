@@ -1,23 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: rollout-canary-myapp
-  namespace: argocd
+  name: docuseal-cro
+  namespace: docuseal-ns
 spec:
   project: default
-
   source:
     repoURL: https://github.com/kosh000/kube_argo.git
     targetRevision: HEAD
     path: canary
   destination: 
     server: https://kubernetes.default.svc
-    namespace: rollout-canary-myapp
-
+    namespace: docuseal-ns
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
-
     automated:
       selfHeal: true
       prune: true
