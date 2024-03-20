@@ -1,34 +1,27 @@
-apiVersion: apps/v1
+---
+apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: rollout-canary-myapp
+  name: rollout-docuseal
+  namespace: docuseal-ns
 spec:
-  replicas: 4
-  revisionHistoryLimit: 2
-  selector:
-    matchLabels:
-      app: rollout-canary-myapp
   template:
     metadata:
       labels:
-        app: rollout-canary-myapp
+        app: docuseal
     spec:
       containers:
-      - name: myapp
+      - name: docuseal
         image: docuseal/docuseal
-        imagePullPolicy: Always
         ports:
         - containerPort: 3000
+  selector:
+    matchLabels:
+      app: docuseal
+  replica: 4
+  revisionHistoryLimit: 2
   strategy:
     canary:
       steps:
-      - experiment:
-          templates:
-          - name: myapp-canary
-            specRef: canary
-            selector:
-              matchLabels:
-                app: rollout-canary-myapp
-            metadata:
-              labels:
-                app: rollout-canary-myapp
+      - setWeight: 10
+      - pause: {} # rollout manually
