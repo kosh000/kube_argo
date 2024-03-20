@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: myapp
+  name: rollout-canary-myapp
   namespace: argocd
 spec:
   project: default
@@ -12,7 +12,7 @@ spec:
     path: canary
   destination: 
     server: https://kubernetes.default.svc
-    namespace: myapp
+    namespace: rollout-canary-myapp
 
   syncPolicy:
     syncOptions:

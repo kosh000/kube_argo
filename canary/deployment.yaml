@@ -7,11 +7,11 @@ spec:
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: myapp
+      app: rollout-canary-myapp
   template:
     metadata:
       labels:
-        app: myapp
+        app: rollout-canary-myapp
     spec:
       containers:
       - name: myapp
