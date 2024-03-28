@@ -48,8 +48,8 @@ kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/rele
 echo "it takes time for argocd to come up, 5 ish mins....."
 sleep 350
 ## This will prompt you the password
-## thisisnotapassword
-argocd admin initial-password -n argocd 
+## hShKpqglvJGMpXxW
+argocd admin initial-password -n argocd
 read -rp "copy the above password for argocd and do change it later."
 
 echo "kubectl port-forward svc/argocd-server -n argocd 8080:443"
