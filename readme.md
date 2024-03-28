@@ -7,7 +7,7 @@ Implementing Kube, ArgoCD and Docker with ArgoCD Canary Release
 ### **Minikube and KubeCTL**
 Install Kube on the machine. I am using MiniKube
 
-R un the below command to start installation of minikube and kubectl.
+Run the below command to start installation of minikube and kubectl.
 > curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 > sudo install minikube-linux-amd64 /usr/local/bin/minikube
 > curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -90,6 +90,7 @@ kubectl argo rollouts promote rollout-docuseal -n docuseal-ns
 > kubectl get pod
 > kubectl get svc
 > kubectl get ns
+> kubectl get rs
 
 ## Clean up
 
