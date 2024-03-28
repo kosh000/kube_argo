@@ -1,14 +1,21 @@
-project: default
-source:
-  repoURL: 'https://github.com/kosh000/kube_argo.git'
-  path: canary
-  targetRevision: HEAD
-destination:
-  server: 'https://kubernetes.default.svc'
-  namespace: docuseal-ns
-syncPolicy:
-  automated:
-    prune: true
-    selfHeal: true
-  syncOptions:
-    - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: docuseal
+spec:
+  destination:
+    name: ''
+    namespace: docuseal-ns
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: canary
+    repoURL: 'https://github.com/kosh000/kube_argo'
+    targetRevision: HEAD
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
